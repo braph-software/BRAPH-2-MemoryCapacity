@@ -283,4 +283,4 @@ example test
 %%%% ¡probability!
 .01
 %%%% ¡code!
-test_MemoryCapacity('global')
+test_MC('nodal')
