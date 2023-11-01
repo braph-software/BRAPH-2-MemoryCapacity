@@ -1,5 +1,6 @@
-%BRAPH2MemoryCapacity_GENESIS
-% This script generates and tests BRAPH2 for MemoryCapacity
+%BRAPH2GENESIS_WITH_EXCLUSIONS
+% This script generates and tests BRAPH2 excluding some directories and
+%  elements, whose list is defined by the variable excluded.
 
 delete(findall(0, 'type', 'figure'))
 close all
@@ -10,10 +11,12 @@ clc
 % cellfun(@(x) fprintf([ ' ''_' x '.gen.m'' ' ]), Measure.getSubclasses())
 % cellfun(@(x) fprintf([ ' ''_' x '.gen.m'' ' ]), Graph.getSubclasses())
 excluded = { ...
-    'nn', 'neuralnetworks', 'measures' ...
+	'gt', 'atlas', 'cohort', 'analysis', 'nn', 'gui', ...
+	'brainsurfs', 'atlases', 'graphs', 'measures', 'neuralnetworks', 'pipelines', ...
+	'_Exporter.gen.m', '_Importer.gen.m' ...
 	};
 
-%% Genesis for MemoryCapacity
+%% Genesis With Exclusions
 if ispc
     fprintf([ ...
         '\n' ...
@@ -23,7 +26,7 @@ if ispc
         '<strong>@   @  @  @   @   @  @      @   @     #      #  #     Ø   Ø Ø    Ø  ØØ Ø        Ø  Ø      Ø\n</strong>' ...
         '<strong>@@@@   @   @  @   @  @      @   @     #### # ####     ØØØØØ ØØØØ Ø   Ø ØØØØ ØØØØ   Ø  ØØØØ \n</strong>' ...
         '\n' ...
-        '                                                       f o r   M e m o r y C a p a c i t y\n' ...
+        '                                                       W I T H   E X C L U S I O N S\n' ...
         '\n' ...
         ]);
 else
@@ -35,18 +38,23 @@ else
         ' █   █  █  █   █   █  █      █   █     ▓      ▓  ▓     ▒   ▒ ▒    ▒  ▒▒ ▒        ▒  ▒      ▒\n' ...
         ' ████   █   █  █   █  █      █   █     ▓▓▓▓ ▓ ▓▓▓▓     ▒▒▒▒▒ ▒▒▒▒ ▒   ▒ ▒▒▒▒ ▒▒▒▒   ▒  ▒▒▒▒ \n' ...
         '\n' ...
-        '                                                       f o r   M e m o r y C a p a c i t y\n' ...
+        '                                                       W I T H   E X C L U S I O N S\n' ...
         '\n' ...
         ]);
 end
 
-addpath(['.' filesep() '..' filesep() '..'])
-addpath(['.' filesep() '..' filesep() '..' filesep() 'genesis'])
+excluded_per_line = 5;
+offset = max(cellfun(@(x) length(x), excluded)) + 2;
+for i = 1:excluded_per_line:length(excluded)
+    cellfun(@(x) fprintf([x repmat(' ', 1, offset - length(x))]), excluded(i:min(i + excluded_per_line - 1, length(excluded))))
+    fprintf('\n')
+end
+disp(' ')
 
 addpath(fileparts(which('braph2genesis')))
 addpath([fileparts(which('braph2genesis')) filesep 'genesis'])
 
-target_dir = [fileparts(fileparts(which('braph2genesis'))) filesep 'braph2mc'];
+target_dir = [fileparts(fileparts(which('braph2genesis'))) filesep 'braph2_with_exclusions'];
 if exist(target_dir, 'dir') 
     if input([ ...
         'The target directory already exists:\n' ...
@@ -67,15 +75,6 @@ if ~exist(target_dir, 'dir')
 
     [target_dir, source_dir] = genesis(target_dir, [], 2, false, excluded);
 
-    % move braph2mc to main folder
-    movefile([target_dir filesep() 'pipelines' filesep() 'MemoryCapacity' filesep() 'braph2mc.m'], target_dir)
-
-    % move test_braph2distap to test folder
-    movefile([target_dir filesep() 'pipelines' filesep() 'MemoryCapacity' filesep() 'test_braph2mc.m'], [target_dir filesep() 'test'])
-
-    % erase braph2distap from compiled software
-    delete([target_dir filesep() 'pipelines' filesep() 'MemoryCapacity' filesep() 'braph2mc_genesis.m'])
-
     addpath(target_dir)
 
     time_end = toc(time_start);
@@ -86,5 +85,5 @@ if ~exist(target_dir, 'dir')
     
     braph2(false)
 
-    test_braph2mc
+    test_braph2
 end
