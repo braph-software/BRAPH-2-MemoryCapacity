@@ -11,3 +11,5 @@
 braph2/pipelines/*/Example *
 
 *_with_exclusions/
+
+*_mc/
