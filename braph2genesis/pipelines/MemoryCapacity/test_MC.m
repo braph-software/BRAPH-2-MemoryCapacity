@@ -17,10 +17,10 @@ g = MultiplexWU('B', data);
 %% create measures
 switch type
     case 'nodal'
-        mc_nodal = g.get('MEASURE', 'NodalMC');
+        mc_nodal = g.get('MEASURE', 'NodalMemoryCapacity');
         result = mc_nodal.get('M');
     case 'global'
-        mc_global = g.get('MEASURE', 'GlobalMC');
+        mc_global = g.get('MEASURE', 'GlobalMemoryCapacity');
         result = mc_global.get('M');
 end
 

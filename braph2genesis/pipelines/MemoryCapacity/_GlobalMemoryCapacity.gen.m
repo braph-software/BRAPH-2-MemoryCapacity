@@ -110,6 +110,10 @@ M (result, cell) is the GlobalMemoryCapacity.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 tmp_data = g.get('A'); % cell with the subjects data
+if isempty(tmp_data)
+    value = {};
+    return;
+end
 for i = 1:size(tmp_data, 1)
     data{i} = tmp_data{i, i};
 end
