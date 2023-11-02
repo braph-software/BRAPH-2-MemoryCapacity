@@ -26,6 +26,36 @@ Graph
 
 %%% ¡prop!
 %%%% ¡id!
+GlobalMemoryCapacity.TRIALS
+%%%% ¡title!
+Measure TRIALS
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalMemoryCapacity.TRAINING_SAMPLES
+%%%% ¡title!
+Measure TRAINING_SAMPLES
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalMemoryCapacity.TAU_MAX
+%%%% ¡title!
+Measure TAU_MAX
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalMemoryCapacity.N_LOWER
+%%%% ¡title!
+Measure N_LOWER
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalMemoryCapacity.DENSITY
+%%%% ¡title!
+Measure DENSITY
+
+%%% ¡prop!
+%%%% ¡id!
 GlobalMemoryCapacity.M
 %%%% ¡title!
 GlobalMemoryCapacity

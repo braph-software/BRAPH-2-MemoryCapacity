@@ -26,6 +26,36 @@ Graph
 
 %%% ¡prop!
 %%%% ¡id!
+NodalMemoryCapacity.TRIALS
+%%%% ¡title!
+Measure TRIALS
+
+%%% ¡prop!
+%%%% ¡id!
+NodalMemoryCapacity.TRAINING_SAMPLES
+%%%% ¡title!
+Measure TRAINING_SAMPLES
+
+%%% ¡prop!
+%%%% ¡id!
+NodalMemoryCapacity.TAU_MAX
+%%%% ¡title!
+Measure TAU_MAX
+
+%%% ¡prop!
+%%%% ¡id!
+NodalMemoryCapacity.N_LOWER
+%%%% ¡title!
+Measure N_LOWER
+
+%%% ¡prop!
+%%%% ¡id!
+NodalMemoryCapacity.DENSITY
+%%%% ¡title!
+Measure DENSITY
+
+%%% ¡prop!
+%%%% ¡id!
 NodalMemoryCapacity.M
 %%%% ¡title!
 NodalMemoryCapacity
