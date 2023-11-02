@@ -12,4 +12,4 @@ braph2/pipelines/*/Example *
 
 *_with_exclusions/
 
-*mc/
+braph2mc/*
