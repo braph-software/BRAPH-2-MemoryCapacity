@@ -78,9 +78,9 @@ BRAPH2.installed('ST', ewm)
 BRAPH2.installed('DM', ewm)
 BRAPH2.installed('NN', ewm)
 
-if nargin < 1 || isempty(gui) || gui
-    BRAPH2GUI()
-end
+% if nargin < 1 || isempty(gui) || gui
+%     BRAPH2GUI()
+% end
 
 if ispc
     fprintf([ ...
