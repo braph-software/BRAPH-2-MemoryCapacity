@@ -1,6 +1,6 @@
 function create_data_Memory_Capacity(data_dir, random_seed)
 if nargin < 1
-    data_dir = [fileparts(which('SubjectCON_MP')) filesep 'Example data Memory Capacity'];
+    data_dir = [fileparts(which('GlobalMemoryCapacity')) filesep 'Example data Memory Capacity'];
 end
 
 if nargin < 2
