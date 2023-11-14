@@ -46,9 +46,16 @@ rng(seed, 'twister')
 %% Identifies test directories
 braph2_dir = fileparts(which('braph2mc'));
 
-directories_to_test = { ...
-    [braph2_dir filesep 'pipelines'] ...
-    };
+directories_to_test = {};
+
+pipelines_dir = [braph2_dir filesep 'pipelines'];
+addpath(pipelines_dir)
+pipelines_dir_list = dir(pipelines_dir); % get the folder contents
+pipelines_dir_list = pipelines_dir_list([pipelines_dir_list(:).isdir] == 1); % remove all files (isdir property is 0)
+pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, {'.', '..'})); % remove '.' and '..'
+for i = 1:1:length(pipelines_dir_list)
+    directories_to_test{end + 1} = [pipelines_dir filesep pipelines_dir_list(i).name]; %#ok<SAGROW>
+end
 
 clear braph2_dir 
 
