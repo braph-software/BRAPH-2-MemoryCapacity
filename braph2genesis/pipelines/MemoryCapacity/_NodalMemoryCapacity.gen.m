@@ -208,7 +208,18 @@ for trial = 1:trials
     data_alltrial_MCs{1, trial} = MCs_tau_sub;
 end
 
-value = data_alltrial_MCs;
+% split
+for i = 1:size(data, 2)
+    tmp_layer_val{i} = cellfun(@(x) x(:,:,i), data_alltrial_MCs, 'UniformOutput',false);
+end
+
+%average
+for i = 1:size(data, 2)
+    tmp_trials = tmp_layer_val{i};
+    mean_val_layer{i} =  mean(cat(ndims(tmp_trials{1}) + 1, tmp_trials{:}), ndims(tmp_trials{1}) + 1);
+end
+
+value = mean_val_layer;
 %%%% ¡calculate_callbacks!
 function MC_tau = calculate_MCnodal(W,W_in,tau_max,input_data, ridge,verbose)
 % Network dimension
