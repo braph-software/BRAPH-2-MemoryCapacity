@@ -19,7 +19,6 @@ In this Developer Tutorial, we will explain how BRAPH~2.0 is compiled, how the e
 
 \tableofcontents
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
 \section{Compilation and Element (Re)Generation}
 
@@ -59,21 +58,21 @@ This can be done with the function \code{regenerate()}, as shown in \Coderef{cd:
 ]
 >> close all; delete(findall(0, 'type', 'figure')); clear all ¥\circled{1}\circlednote{1}{clears the workspace (not always necessary, but needed is some element instances are still in the workspace).}¥
 
->> regenerate(regenerate('/src/gui', {'Pipeline'}) ¥\circled{2}\circlednote{2}{regenerates \code{Pipeline}.}¥
+>> regenerate('/src/gui', {'Pipeline'}) ¥\circled{2}\circlednote{2}{regenerates \code{Pipeline}.}¥
 
->> regenerate(regenerate('/src/gui', {'Pipeline'}, 'DoubleCompilation', false) ¥\circled{3}\circlednote{3}{performs only one compilation.}¥
+>> regenerate('/src/gui', {'Pipeline'}, 'DoubleCompilation', false) ¥\circled{3}\circlednote{3}{performs only one compilation.}¥
 
->> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateElement', false) ¥\circled{4}\circlednote{4}{does not regenerate the element, but only the layout and the unit test.}¥
+>> regenerate('/src/gui', {'Pipeline'}, 'CreateElement', false) ¥\circled{4}\circlednote{4}{does not regenerate the element, but only the layout and the unit test.}¥
 
->> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateLayout', false) ¥\circled{5}\circlednote{5}{does not regenerate the layout.}¥
+>> regenerate('/src/gui', {'Pipeline'}, 'CreateLayout', false) ¥\circled{5}\circlednote{5}{does not regenerate the layout.}¥
 
->> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateTest', false) ¥\circled{6}\circlednote{6}{does not regenerate the unit test.}¥
+>> regenerate('/src/gui', {'Pipeline'}, 'CreateTest', false) ¥\circled{6}\circlednote{6}{does not regenerate the unit test.}¥
 
->> regenerate(regenerate('/src/gui', {'Pipeline'}, 'UnitTest', false) ¥\circled{7}\circlednote{7}{does not perform the unit test.}¥
+>> regenerate('/src/gui', {'Pipeline'}, 'UnitTest', false) ¥\circled{7}\circlednote{7}{does not perform the unit test.}¥
 
->> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateLayout', false, 'UnitTest', false) ¥\circled{8}\circlednote{8}{Multiple options can be selected at once. In this ces, it does not regenerate the layout and it does not perform the unit test.}¥
+>> regenerate('/src/gui', {'Pipeline'}, 'CreateLayout', false, 'UnitTest', false) ¥\circled{8}\circlednote{8}{Multiple options can be selected at once. In this ces, it does not regenerate the layout and it does not perform the unit test.}¥
 
->> regenerate(regenerate('/src/gui', {'Pipeline', 'GUI'}) ¥\circled{9}\circlednote{9}{Multiple elements can be regenerated at once. This can throw an error, typically because an instance of the element to be regenerated remains in the workspace. In this case, regenerate the elements one by one.}¥
+>> regenerate('/src/gui', {'Pipeline', 'GUI'}) ¥\circled{9}\circlednote{9}{Multiple elements can be regenerated at once. This can throw an error, typically because an instance of the element to be regenerated remains in the workspace. In this case, regenerate the elements one by one.}¥
 \end{lstlisting}
 
 \section{Elements}
@@ -236,6 +235,8 @@ Its three direct subclasses are \code{NoValue}, \code{Callback}, and \code{Concr
 	Concrete elements further derive directly or indirectly from \code{ConcreteElement}.
 	}
 
+#!FIG01
+
 The element \code{NoValue} is used to represent a value that has not been set (for properties of categories \code{METADATA}, \code{PARAMETER}, \code{DATA}, \code{FIGURE} or \code{GUI}) or calculated (for properties of category \code{RESULT}, \code{QUERY}, \code{EVANESCENT}), while it should not be used for properties of category \code{CONSTANT}.
 It should be instantiated using \Coderef{cd:novalue}.
 %
@@ -291,7 +292,7 @@ el.set( ... ¥\circled{3}\circlednote{3}{sets the values of multiple props at on
 	7, 'new el notes' ...
 	) 
 
-el = el.set('ID', 'new el id') ¥\circled{3}\circlednote{3}{returns the element.}¥
+el = el.set('ID', 'new el id') ¥\circled{4}\circlednote{4}{returns the element.}¥
 \end{lstlisting}
 %
 When a prop is set to a certain value, the following operations are performed:
@@ -583,6 +584,8 @@ __Format.EMPTY_TAG__ ¥\circled{5}¥
 	Directory structure of \fn{braph2genesis} (left) and \fn{braph2} (right).
 	}
 
+#!FIG02
+
 The directory structure of \fn{braph2} and the relation with \fn{braph2genesis} is illustrated in \Figref{fig:genesis}.
 All objects are derived from a base object called \code{Element} and written in a simplified pseudocode (files \fn{*.gen.m}) that is compiled into the actual elements (files \fn{*.m}) by the command \code{braph2genesis} (some examples of these elements are shown).
 The compiled code can be launched by the command \code{braph2}.
@@ -599,29 +602,53 @@ We will now see how to implement a few concrete elements.
 \begin{tcolorbox}[
 	title=Light compilation of BRAPH~2.0
 ]
-To speed up the compilation of BRAPH~2.0 when trying these examples, it is possible to perform a light version of the compilation using the script \code{braph2genesis\_with\_exclusions}, which permits one to exclude entire folders or individual elements, as shown in \Coderef{cd:exclusions}.
+To speed up the compilation of BRAPH~2.0 when trying these examples, it is possible to perform a light version of the compilation using the script \code{braph2genesis\_with\_rollcall}, which permits one to exclude/include specific folders or elements, as shown in \Coderef{cd:rollcall}.
 %
 \begin{lstlisting}[
-	label=cd:exclusions,
+	label=cd:rollcall,
 	caption={
-		{\bf BRAPH~2.0 genesis with exclusions.}
-		Using \code{braph2genesis\_with\_exclusions}, it is possible to exclude some folders and elements, which are defined in the variable \code{excluded}.
-		You can place your elements in the folder \fn{util}.
+		{\bf BRAPH~2.0 genesis with rollcall.}
+		Using \code{braph2genesis\_with\_rollcall} (which is found in the folder \fn{sandbox}), it is possible to exclude some folders and elements, which are defined in the variable \code{rollcall}.
+		You can place your elements in the folder \fn{sandbox}.
 	}
 ]
 ¤...¤
-excluded = { ...
-	'gt', 'atlas', 'cohort', 'analysis', 'nn', 'gui', ...
-	'brainsurfs', 'atlases', 'graphs', 'measures', 'neuralnetworks', 'pipelines', ...
-	'_Exporter.gen.m', '_Importer.gen.m' ...
-	};
+%% Add here all included and excluded folders and elements
+% '-folder'                 the folder and its elements will be excluded
+%
+% '+folder'                 the folder is included, but not its elements
+%   '+_ElementName.gen.m'   the element is included,
+%                           if the folder is included
+%
+% '+folder*'                the folder and its elements are included
+%   '-_ElementName.gen.m'   the element is excluded,
+%                           if the folder and its elements are included
+% (by default, the folders are included as '+folder*')
+rollcall = { ...
+    '+util*', '-_Exporter.gen.m', '+_Importer.gen.m', ...
+    '+ds*', '-ds_examples', ...
+    '-atlas', ...
+    '-gt', ...
+    '-cohort', ...
+    '-analysis', ...
+    '-nn', ...
+    '-gui', '-gui_examples', ...
+    '-brainsurfs', ...
+    '-atlases', ...
+    '-graphs', ...
+    '-measures', ...
+    '-neuralnetworks', ...
+    '-pipelines', ...
+    '+test*', ...
+    '-sandbox' ...
+    };
 ¤...¤
 \end{lstlisting}
 
-This same approach (appropriately altering the excluded folders and elements) can also be used to reduce the compilation time when developing new functionalities.
+This same approach (appropriately altering the included/excluded folders and elements) can also be used to reduce the compilation time when developing new functionalities.
 
 Importantly, the directory \fn{braph2genesis} must be in the MatLab file path and the directory \fn{braph2} must not be in the MatLab file path.
-The compiled BRAPH~2.0 is saved in \fn{brap2\_with\_exclusions}, which is ignored by GIT.
+The compiled BRAPH~2.0 is saved in \fn{brap2\_with\_rollcall}, which is ignored by GIT.
 \end{tcolorbox}
 \end{fullwidth}
 
