@@ -74,20 +74,14 @@ dp_classes = cellfun(@(x) x.get('DP_CLASS'), dco.get('D_LIST'), 'UniformOutput',
 dp_list = horzcat(dp_list{:});
 
 % inspect whether there are overlapping datapoints
-if isempty(dp_list)
+if isempty(dp_list) | isempty(dp_classes)
     unique_dp_list = {};
-    dp_class = '';
+    dp_class = 'NNDataPoint';
 else
     dp_ids = cellfun(@(x) x.get('ID'), dp_list, 'UniformOutput', false);
     [C, i_dp_ids] = unique(dp_ids);
     unique_dp_list = dp_list(sort(i_dp_ids));
     dp_class = dp_classes{1};
-end
-
-if isempty(dp_class) && ~isempty(dp_classes)
-    dp_class = dp_classes{1};
-else
-    dp_class = 'NNDataPoint';
 end
 
 % create the combined NNDataset
