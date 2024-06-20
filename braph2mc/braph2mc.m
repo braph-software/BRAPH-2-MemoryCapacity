@@ -1,6 +1,6 @@
 %BRAPH 2 for MemoryCapacity.
 
-braph2
+braph2(false)
 
 if ispc
     fprintf([ ...
